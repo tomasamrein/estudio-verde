@@ -1,18 +1,14 @@
 ---
-import { WhatsappLogoIcon } from '@phosphor-icons/react/dist/ssr';
+import CircularCTA from '../react/CircularCTA';
 import { waLink } from '../../lib/site';
 ---
-<a
+<div
   id="float-wa"
-  href={waLink}
-  target="_blank"
-  rel="noopener"
-  aria-label="Escribinos por WhatsApp"
-  class="press fixed right-4 bottom-4 z-50 flex h-14 w-14 translate-y-4 items-center justify-center rounded-full bg-terra text-paper opacity-0 pointer-events-none data-[show]:pointer-events-auto data-[show]:translate-y-0 data-[show]:opacity-100 [@media(hover:hover)]:hover:bg-terra-dark sm:right-6 sm:bottom-6"
+  class="fixed right-3 bottom-3 z-50 translate-y-4 opacity-0 pointer-events-none data-[show]:pointer-events-auto data-[show]:translate-y-0 data-[show]:opacity-100 sm:right-5 sm:bottom-5"
   style="transition: opacity 300ms cubic-bezier(0.23,1,0.32,1), transform 300ms cubic-bezier(0.23,1,0.32,1);"
 >
-  <WhatsappLogoIcon size={28} weight="fill" aria-hidden="true" />
-</a>
+  <CircularCTA client:idle href={waLink} label="Escribinos por WhatsApp" size={96} tone="terra" ring="#1f2a1c" text="WHATSAPP • ESCRIBINOS • " />
+</div>
 <script is:inline>
   // Se oculta sobre el hero y sobre contacto (IntersectionObserver, sin scroll listeners)
   (function () {

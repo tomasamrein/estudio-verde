@@ -51,7 +51,7 @@ export default function BeforeAfter({ before, after }: Props) {
   return (
     <div
       ref={ref}
-      className="relative aspect-[4/5] w-full cursor-ew-resize touch-pan-y overflow-hidden rounded-xs bg-bone select-none sm:aspect-[16/10]"
+      className="relative aspect-[4/3] w-full cursor-ew-resize touch-pan-y overflow-hidden rounded-xs bg-bone select-none sm:aspect-[2/1]"
       onPointerDown={(e) => {
         take();
         dragging.current = true;

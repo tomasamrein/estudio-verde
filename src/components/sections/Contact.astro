@@ -1,26 +1,44 @@
 ---
 import { WhatsappLogoIcon, EnvelopeSimpleIcon, MapPinIcon } from '@phosphor-icons/react/dist/ssr';
+import CircularCTA from '../react/CircularCTA';
 import { site, waLink, mailLink } from '../../lib/site';
 import { buttonVariants } from '../ui/button';
 ---
 <section id="contacto" class="bg-terra py-20 text-paper md:py-32">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-    <p class="reveal flex items-center gap-2 text-sm font-semibold tracking-[0.18em] uppercase"><MapPinIcon size={18} weight="fill" aria-hidden="true" /> {site.zone}</p>
-    <h2 class="reveal mt-6 max-w-4xl font-display text-[clamp(2.8rem,9vw,6.5rem)] leading-[0.95] tracking-[-0.04em]" style="--i:1">Contanos qué querés hacer.</h2>
-    <p class="reveal mt-6 max-w-xl text-lg leading-relaxed text-paper/90" style="--i:2">Escribinos por WhatsApp o mail. Te respondemos nosotros y, si hace falta, coordinamos una visita con cita previa.</p>
-    <div class="reveal mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10" style="--i:3">
-      <a href={waLink} target="_blank" rel="noopener" class={buttonVariants({ variant: 'light', size: 'xl' })}>
-        <WhatsappLogoIcon size={28} weight="fill" aria-hidden="true" /> Escribinos por WhatsApp
-      </a>
-      <div>
-        <a href={mailLink} class="press inline-flex items-center gap-2 text-lg underline decoration-1 underline-offset-[6px] sm:text-xl">
-          <EnvelopeSimpleIcon size={22} aria-hidden="true" /> {site.email}
+  <div class="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-12 lg:px-10">
+    <div class="lg:col-span-7">
+      <p class="reveal flex items-center gap-2 font-mono text-xs font-medium tracking-[0.2em] uppercase"><MapPinIcon size={16} weight="fill" className="shrink-0" aria-hidden="true" /> {site.zone}</p>
+      <h2 class="reveal mt-6 font-display text-[clamp(2.8rem,9vw,6.5rem)] leading-[0.95] tracking-[-0.04em]" style="--i:1">Contanos qué querés hacer.</h2>
+      <p class="reveal mt-6 max-w-xl text-lg leading-relaxed text-paper/90" style="--i:2">Escribinos por WhatsApp o mail. Te respondemos nosotros y, si hace falta, coordinamos una visita con cita previa.</p>
+      <div class="reveal mt-10 flex flex-col items-start gap-6" style="--i:3">
+        <a href={waLink} target="_blank" rel="noopener" class={buttonVariants({ variant: 'light', size: 'xl' })}>
+          <WhatsappLogoIcon size={28} weight="fill" className="shrink-0" aria-hidden="true" /> Escribinos por WhatsApp
         </a>
-        <button type="button" id="copy-mail" data-mail={site.email} class="press ml-3 text-sm text-paper/80 [@media(hover:hover)]:hover:text-paper">Copiar</button>
-        <span id="copy-status" class="sr-only" aria-live="polite"></span>
+        <div>
+          <a href={mailLink} class="press inline-flex items-center gap-2 text-lg underline decoration-1 underline-offset-[6px] sm:text-xl">
+            <EnvelopeSimpleIcon size={22} className="shrink-0" aria-hidden="true" /> {site.email}
+          </a>
+          <button type="button" id="copy-mail" data-mail={site.email} class="press ml-3 text-sm text-paper/80 [@media(hover:hover)]:hover:text-paper">Copiar</button>
+          <span id="copy-status" class="sr-only" aria-live="polite"></span>
+        </div>
+      </div>
+      <p class="reveal mt-12 border-t border-paper/30 pt-6 text-sm text-paper/85" style="--i:4">Atendemos solo con cita previa, de lunes a viernes. Contestamos los mensajes dentro del día hábil.</p>
+    </div>
+    <div class="flex flex-col gap-8 lg:col-span-5">
+      <div class="reveal flex justify-center lg:justify-end">
+        <CircularCTA client:visible href={waLink} label="Escribinos por WhatsApp" size={180} tone="paper" />
+      </div>
+      <div class="reveal" style="--i:1">
+        <iframe
+          src="https://www.google.com/maps?q=Rosario,+Santa+Fe,+Argentina&z=12&output=embed"
+          title="Mapa de Rosario, Santa Fe"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="block aspect-[4/3] w-full border-0 [filter:grayscale(1)_sepia(0.35)_contrast(0.95)]"
+        ></iframe>
+        <p class="mt-2 font-mono text-[11px] tracking-[0.2em] text-paper/80 uppercase">Rosario / Con cita previa</p>
       </div>
     </div>
-    <p class="reveal mt-12 border-t border-paper/30 pt-6 text-sm text-paper/85" style="--i:4">Atendemos solo con cita previa, de lunes a viernes. Contestamos los mensajes dentro del día hábil.</p>
   </div>
 </section>
 <script is:inline>

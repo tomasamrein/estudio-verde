@@ -1,34 +1,45 @@
 ---
+import { Image } from 'astro:assets';
+import { images } from '../../lib/images';
 const steps = [
-  { verb: 'Charlamos', title: 'Charla inicial', text: 'Nos contás qué necesitás, vemos el lugar y coordinamos una visita con cita previa. Sin compromiso.' },
-  { verb: 'Diseñamos', title: 'Diseño', text: 'Armamos la propuesta de arquitectura y paisaje juntas, con materiales, especies y plazos claros.' },
-  { verb: 'Construimos', title: 'Obra', text: 'Dirigimos la obra y el armado del jardín. Te mantenemos al tanto en cada etapa.' },
-  { verb: 'Entregamos', title: 'Entrega', text: 'Recorremos todo con vos y te dejamos indicaciones de cuidado para que el espacio crezca bien.' },
+  { verb: 'Charlamos', title: 'Charla inicial', img: images.procesoCharla, alt: 'Personas conversando alrededor de una mesa con anotaciones', text: 'Nos contás qué necesitás, vemos el lugar y coordinamos una visita con cita previa. Sin compromiso.' },
+  { verb: 'Diseñamos', title: 'Diseño', img: images.procesoDiseno, alt: 'Manos dibujando planos a mano sobre una mesa de trabajo', text: 'Armamos la propuesta de arquitectura y paisaje juntas, con materiales, especies y plazos claros.' },
+  { verb: 'Construimos', title: 'Obra', img: images.procesoObra, alt: 'Constructor cortando tablas de madera en una obra', text: 'Dirigimos la obra y el armado del jardín. Te mantenemos al tanto en cada etapa.' },
+  { verb: 'Entregamos', title: 'Entrega', img: images.procesoEntrega, alt: 'Padre con sus hijos disfrutando el jardín de su casa', text: 'Recorremos todo con vos y te dejamos indicaciones de cuidado para que el espacio crezca bien.' },
 ];
 ---
 <section id="proceso" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-32 lg:px-10">
-  <p class="reveal text-xs font-semibold tracking-[0.2em] text-wood uppercase">Cómo trabajamos</p>
+  <p class="reveal font-mono text-[11px] font-medium tracking-[0.22em] text-wood uppercase">Cómo trabajamos</p>
   <div class="mt-6 grid gap-10 lg:grid-cols-12">
-    <div class="lg:col-span-6">
-      <div class="lg:sticky lg:top-32">
-        <div class="relative h-[clamp(4rem,12vw,8.5rem)]" aria-hidden="true">
+    <div class="hidden lg:col-span-6 lg:block">
+      <div class="sticky top-24">
+        <div class="relative aspect-[4/5] max-h-[72vh] w-full overflow-hidden rounded-xs bg-bone">
           {steps.map((s, i) => (
-            <span data-verb={i} class:list={['verb absolute inset-0 font-display text-[clamp(3.2rem,11vw,8rem)] leading-none italic tracking-[-0.04em] text-olive', { 'is-active': i === 0 }]}>{s.verb}</span>
+            <div data-frame={i} class:list={['pframe absolute inset-0', { 'is-active': i === 0 }]}>
+              <Image src={s.img} alt={s.alt} widths={[600, 900, 1200]} sizes="45vw" class="h-full w-full object-cover" />
+            </div>
           ))}
+          <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(to_top,rgba(20,26,18,0.7),transparent)]"></div>
+          <div class="absolute bottom-5 left-6 h-[clamp(3rem,6vw,5.5rem)] w-[90%]" aria-hidden="true">
+            {steps.map((s, i) => (
+              <span data-verb={i} class:list={['verb absolute inset-0 font-display text-[clamp(2.6rem,5.5vw,5rem)] leading-none italic tracking-[-0.04em] text-paper', { 'is-active': i === 0 }]}>{s.verb}</span>
+            ))}
+          </div>
         </div>
-        <p class="mt-4 max-w-sm text-forest/70">Cuatro pasos simples. Tocá cada uno para ver qué pasa en esa etapa.</p>
       </div>
     </div>
     <ol class="lg:col-span-6" id="process-steps">
       {steps.map((s, i) => (
-        <li class:list={['step border-t border-forest/15 lg:min-h-[38vh]', { 'is-active': i === 0 }]} data-step={i}>
-          <button type="button" class="press flex w-full items-baseline gap-5 py-6 text-left" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`step-${i}`}>
-            <span class="font-display text-lg text-wood">0{i + 1}</span>
-            <span class="font-display text-3xl tracking-[-0.02em] sm:text-4xl">{s.title}</span>
+        <li class:list={['step border-t border-forest/15 lg:flex lg:min-h-[52vh] lg:flex-col lg:justify-center', { 'is-active': i === 0 }]} data-step={i}>
+          <button type="button" class="press w-full py-6 text-left" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`step-${i}`}>
+            <span class="font-display text-4xl tracking-[-0.02em] sm:text-5xl">{s.title}</span>
           </button>
-          <div id={`step-${i}`} class="pb-8 pl-10">
+          <div id={`step-${i}`} class="pb-8">
             <span class="bar mb-4 block h-0.5 w-16 bg-terra"></span>
             <p class="max-w-md text-lg leading-relaxed text-forest/80">{s.text}</p>
+            <div class="mt-6 aspect-[4/3] overflow-hidden rounded-xs bg-bone lg:hidden">
+              <Image src={s.img} alt={s.alt} widths={[480, 800]} sizes="100vw" class="h-full w-full object-cover" />
+            </div>
           </div>
         </li>
       ))}
@@ -38,13 +49,13 @@ const steps = [
 <script is:inline>
   (function () {
     var items = document.querySelectorAll('#process-steps [data-step]');
-    var verbs = document.querySelectorAll('[data-verb]');
+    var groups = [document.querySelectorAll('[data-verb]'), document.querySelectorAll('[data-frame]')];
     function set(n) {
       items.forEach(function (el, i) {
         el.classList.toggle('is-active', i === n);
         el.querySelector('button').setAttribute('aria-expanded', i === n ? 'true' : 'false');
       });
-      verbs.forEach(function (v, i) { v.classList.toggle('is-active', i === n); });
+      groups.forEach(function (g) { g.forEach(function (v, i) { v.classList.toggle('is-active', i === n); }); });
     }
     items.forEach(function (el, i) { el.querySelector('button').addEventListener('click', function () { set(i); }); });
     if (!('IntersectionObserver' in window)) return;

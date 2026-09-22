@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/newsreader';
 @import '@fontsource-variable/figtree';
+@import '@fontsource-variable/archivo/standard.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/600.css';
 
 @theme {
   --color-paper: #f3f1e8;
@@ -13,6 +16,9 @@
   --color-terra-dark: #9a4830;
   --font-display: 'Newsreader Variable', Georgia, serif;
   --font-sans: 'Figtree Variable', system-ui, sans-serif;
+  --font-condensed: 'Archivo Variable', 'Arial Narrow', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --color-terra-light: #e38b62;
   --radius-xs: 2px;
   --ease-out-soft: cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -31,16 +37,39 @@ body { background: var(--color-paper); color: var(--color-forest); font-family: 
 .press { transition: transform 160ms var(--ease-out-soft), background-color 160ms, color 160ms, opacity 200ms; }
 .press:active { transform: scale(0.97); }
 
-/* Proceso: paso activo */
+/* Proceso: paso activo + foto con crossfade */
 .step { opacity: 0.45; transition: opacity 300ms var(--ease-out-soft); }
 .step.is-active { opacity: 1; }
 .step .bar { transform: scaleX(0); transform-origin: left; transition: transform 500ms var(--ease-out-soft); }
 .step.is-active .bar { transform: scaleX(1); }
+.pframe { opacity: 0; transition: opacity 700ms var(--ease-out-soft); }
+.pframe.is-active { opacity: 1; }
 .verb { opacity: 0; transform: translateY(12px); transition: opacity 400ms var(--ease-out-soft), transform 400ms var(--ease-out-soft); }
 .verb.is-active { opacity: 1; transform: none; }
+
+/* Hero: slideshow con Ken Burns y reveal de líneas */
+.display-condensed { font-family: var(--font-condensed); font-stretch: 68%; font-weight: 850; text-transform: uppercase; letter-spacing: -0.01em; }
+.slide { opacity: 0; transition: opacity 1200ms var(--ease-out-soft); }
+.slide.is-active { opacity: 1; }
+.slide img { transform: scale(1.02); }
+.slide.is-active img { animation: kenburns 9s linear forwards; }
+@keyframes kenburns { from { transform: scale(1.02); } to { transform: scale(1.14); } }
+.hl { display: none; }
+.hl.is-active { display: block; }
+.hl .ln { display: block; padding-top: 0.12em; clip-path: inset(0 0 100% 0); transform: translateY(40%); }
+.hl.is-in .ln { clip-path: inset(-10% 0 -10% 0); transform: none; transition: clip-path 900ms var(--ease-out-soft), transform 900ms var(--ease-out-soft); }
+.hl.is-in .ln:nth-child(2) { transition-delay: 120ms; }
+.hl.is-in .sub { opacity: 1; transform: none; transition: opacity 700ms 300ms var(--ease-out-soft), transform 700ms 300ms var(--ease-out-soft); }
+.hl .sub { opacity: 0; transform: translateY(10px); }
+
+/* Header sobre el hero: transparente con texto claro */
+#site-header:not([data-compact]) { background: transparent; color: var(--color-paper); }
+#site-header:not([data-compact]) .logo-mark { filter: brightness(0) invert(0.95); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .reveal, .js .reveal-clip { opacity: 1; transform: none; clip-path: none; transition: none; }
+  .hl .ln, .hl .sub { clip-path: none; transform: none; opacity: 1; }
+  .slide.is-active img { animation: none; }
   *, *::before, *::after { animation: none !important; transition-duration: 0ms !important; }
 }

@@ -1,35 +1,98 @@
 ---
 import { Image } from 'astro:assets';
-import { WhatsappLogoIcon, ArrowDownIcon } from '@phosphor-icons/react/dist/ssr';
+import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react/dist/ssr';
+import CircularCTA from '../react/CircularCTA';
 import { images } from '../../lib/images';
 import { waLink } from '../../lib/site';
-import { buttonVariants } from '../ui/button';
+
+const slides = [
+  { img: images.heroCasa, alt: 'Casa de líneas simples entre árboles, con ventanales iluminados al atardecer', l1: 'Habitá', l2: 'el paisaje', sub: 'Arquitectura y paisajismo pensados juntos, en Rosario.' },
+  { img: images.jardinDespues, alt: 'Jardín con césped, canteros florecidos y árboles', l1: 'Diseñá', l2: 'con la tierra', sub: 'Jardines, patios y terrazas con especies nativas y poco mantenimiento.' },
+  { img: images.interiorVerde, alt: 'Interior de madera luminoso con muchas plantas', l1: 'Viví', l2: 'entre plantas', sub: 'Casas y locales con luz natural, madera y materiales nobles.' },
+];
+const mono = 'font-mono text-[11px] font-medium tracking-[0.22em] uppercase';
 ---
-<section id="top" data-hero class="mx-auto grid max-w-7xl gap-8 px-4 pt-8 pb-16 sm:px-6 md:min-h-[calc(100dvh-4.5rem)] lg:grid-cols-12 lg:gap-12 lg:px-10 lg:pt-12">
-  <div class="flex flex-col justify-center lg:col-span-7">
-    <p class="reveal mb-5 text-xs font-semibold tracking-[0.2em] text-wood uppercase">Arquitectura y paisajismo · Rosario</p>
-    <h1 class="reveal font-display text-[clamp(3.6rem,15vw,9.5rem)] leading-[0.88] font-normal tracking-[-0.045em]" style="--i:1">
-      Estudio<br /><em class="font-light text-olive">Verde</em>
-    </h1>
-    <p class="reveal mt-8 max-w-xl font-display text-2xl leading-snug sm:text-3xl" style="--i:2">
-      Arquitectura y paisajismo, pensados juntos.
-    </p>
-    <p class="reveal mt-4 max-w-lg text-base leading-relaxed text-forest/75 sm:text-lg" style="--i:3">
-      Diseñamos y construimos casas, remodelaciones, locales, jardines y terrazas con materiales nobles y respeto por el entorno. Del primer boceto a la última planta.
-    </p>
-    <div class="reveal mt-9 flex flex-wrap items-center gap-x-8 gap-y-4" style="--i:4">
-      <a href={waLink} target="_blank" rel="noopener" class={buttonVariants({ variant: 'whatsapp', size: 'md' })}>
-        <WhatsappLogoIcon size={20} weight="fill" aria-hidden="true" /> Contanos tu proyecto
-      </a>
-      <a href="#proyectos" class={buttonVariants({ variant: 'ghost', size: 'text' })}>
-        Ver proyectos <ArrowDownIcon size={16} aria-hidden="true" />
-      </a>
+<section id="top" data-hero class="relative isolate h-[100dvh] min-h-[560px] overflow-hidden bg-forest text-paper" aria-roledescription="carrusel" aria-label="Estudio Verde">
+  <h1 class="sr-only">Estudio Verde, arquitectura y paisajismo en Rosario</h1>
+
+  {slides.map((s, i) => (
+    <div class:list={['slide absolute inset-0 -z-20', { 'is-active': i === 0 }]} data-slide={i} aria-hidden={i === 0 ? 'false' : 'true'}>
+      <Image src={s.img} alt={s.alt} widths={[640, 1024, 1600]} sizes="100vw" loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} class="h-full w-full object-cover" />
+    </div>
+  ))}
+  <!-- Velo para contraste: más denso abajo a la izquierda, donde va el texto -->
+  <div class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgba(20,26,18,0.88),rgba(20,26,18,0.35)_50%,rgba(20,26,18,0.25)),radial-gradient(ellipse_at_bottom_left,rgba(20,26,18,0.6),transparent_60%)]"></div>
+
+  <p class:list={[mono, 'absolute top-24 left-1/2 -translate-x-1/2 whitespace-nowrap text-paper/80']}>Arquitectura / Paisajismo</p>
+
+  <div class="absolute inset-x-0 bottom-0 mx-auto max-w-7xl px-4 pb-32 sm:px-6 sm:pb-28 lg:px-10">
+    <div class="grid items-end gap-8 lg:grid-cols-12">
+      <div class="lg:col-span-9">
+        {slides.map((s, i) => (
+          <div class:list={['hl', { 'is-active is-in': i === 0 }]} data-hl={i} aria-live={i === 0 ? 'polite' : undefined}>
+            <p class="display-condensed text-[clamp(3.6rem,15vw,11rem)] leading-[0.82]">
+              <span class="ln text-paper">{s.l1}</span>
+              <span class="ln text-terra-light">{s.l2}<span class="text-terra">.</span></span>
+            </p>
+            <p class="sub mt-5 max-w-md text-base text-paper/85 sm:text-lg">{s.sub}</p>
+          </div>
+        ))}
+        <div class="mt-7 flex items-center gap-6">
+          <a href="#contacto" class="press inline-flex h-13 shrink-0 items-center gap-3 bg-terra px-6 text-base font-medium text-paper [@media(hover:hover)]:hover:bg-terra-dark">
+            Contanos tu proyecto <span aria-hidden="true" class="text-lg leading-none">↗</span>
+          </a>
+          <div class="hidden sm:block">
+            <CircularCTA client:idle href={waLink} label="Escribinos por WhatsApp" size={112} tone="terra" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="relative lg:col-span-5">
-    <div class="reveal-clip relative h-[62vh] min-h-80 overflow-hidden rounded-xs lg:h-full">
-      <Image src={images.heroCasa} alt="Casa rodeada de árboles al atardecer, con grandes ventanales" widths={[480, 800, 1200, 1600]} sizes="(min-width: 1024px) 40vw, 100vw" loading="eager" fetchpriority="high" class="h-full w-full object-cover" />
-    </div>
-    <p class="mt-3 text-xs text-forest/60">Obra y paisaje, un mismo proyecto.</p>
+
+  <p class:list={[mono, 'absolute bottom-7 left-4 text-paper/75 sm:left-6 lg:left-10']}>Rosario / Con cita previa</p>
+
+  <div class="absolute right-4 bottom-16 flex items-center gap-3 sm:bottom-5 sm:right-6 lg:right-10">
+    <span class:list={[mono, 'text-paper/80']} aria-live="polite"><span data-count>1</span> / {slides.length}</span>
+    <button type="button" data-prev aria-label="Imagen anterior" class="press flex h-11 w-11 items-center justify-center rounded-full border border-paper/50 [@media(hover:hover)]:hover:bg-paper [@media(hover:hover)]:hover:text-forest">
+      <CaretLeftIcon size={18} className="shrink-0" aria-hidden="true" />
+    </button>
+    <button type="button" data-next aria-label="Imagen siguiente" class="press flex h-11 w-11 items-center justify-center rounded-full border border-paper/50 [@media(hover:hover)]:hover:bg-paper [@media(hover:hover)]:hover:text-forest">
+      <CaretRightIcon size={18} className="shrink-0" aria-hidden="true" />
+    </button>
   </div>
 </section>
+<script is:inline>
+  // Slideshow: autoplay cada 6s, pausa con hover, fuera de pantalla o con reduced motion
+  (function () {
+    var hero = document.querySelector('[data-hero]');
+    if (!hero) return;
+    var slides = hero.querySelectorAll('[data-slide]');
+    var hls = hero.querySelectorAll('[data-hl]');
+    var count = hero.querySelector('[data-count]');
+    var n = slides.length, cur = 0, timer = null, hover = false, visible = true;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function go(i) {
+      cur = (i + n) % n;
+      slides.forEach(function (s, k) { s.classList.toggle('is-active', k === cur); s.setAttribute('aria-hidden', k === cur ? 'false' : 'true'); });
+      hls.forEach(function (h, k) {
+        h.classList.remove('is-in');
+        h.classList.toggle('is-active', k === cur);
+        if (k === cur) { void h.offsetWidth; h.classList.add('is-in'); }
+      });
+      if (count) count.textContent = String(cur + 1);
+      restart();
+    }
+    function restart() {
+      clearInterval(timer);
+      if (!reduce && !hover && visible) timer = setInterval(function () { go(cur + 1); }, 6000);
+    }
+    hero.querySelector('[data-prev]').addEventListener('click', function () { go(cur - 1); });
+    hero.querySelector('[data-next]').addEventListener('click', function () { go(cur + 1); });
+    hero.addEventListener('mouseenter', function () { hover = true; restart(); });
+    hero.addEventListener('mouseleave', function () { hover = false; restart(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { visible = e[0].isIntersecting; restart(); }).observe(hero);
+    }
+    restart();
+  })();
+</script>

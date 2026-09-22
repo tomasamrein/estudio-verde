@@ -8,7 +8,7 @@ const principles = [
 <section id="enfoque" class="bg-forest py-24 text-paper md:py-40">
   <div class="mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-12 lg:px-10">
     <div class="lg:col-span-7">
-      <p class="reveal text-xs font-semibold tracking-[0.2em] text-sage uppercase">Nuestro enfoque</p>
+      <p class="reveal font-mono text-[11px] font-medium tracking-[0.22em] text-sage uppercase">Nuestro enfoque</p>
       <h2 class="reveal mt-6 font-display text-[clamp(2.6rem,7vw,5.5rem)] leading-[0.98] font-light tracking-[-0.035em]" style="--i:1">
         Diseñamos con conciencia ambiental. <em class="text-sage">Cada obra tiene que dejar el lugar mejor de lo que lo encontró.</em>
       </h2>
@@ -16,7 +16,6 @@ const principles = [
     <ol class="lg:col-span-4 lg:col-start-9 lg:self-end">
       {principles.map((p, i) => (
         <li class="reveal border-t border-paper/20 py-6" style={`--i:${i + 2}`}>
-          <span class="font-display text-sm text-sage">0{i + 1}</span>
           <h3 class="mt-1 font-display text-2xl">{p.t}</h3>
           <p class="mt-2 leading-relaxed text-paper/75">{p.d}</p>
         </li>
