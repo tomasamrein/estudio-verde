@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import { InstagramLogoIcon } from '@phosphor-icons/react/dist/ssr';
+import { images } from '../../lib/images';
+import { site, igLink } from '../../lib/site';
+import { buttonVariants } from '../ui/button';
+const thumbs = [
+  { img: images.galeria, alt: 'Galería con plantas' },
+  { img: images.living, alt: 'Living con plantas' },
+  { img: images.jardinDespues, alt: 'Jardín terminado' },
+  { img: images.interiorVerde, alt: 'Interior con vegetación' },
+];
+---
+<section class="border-y border-forest/15 py-16 md:py-24">
+  <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:px-10">
+    <div class="lg:col-span-5">
+      <p class="reveal text-xs font-semibold tracking-[0.2em] text-wood uppercase">Obras en proceso</p>
+      <a href={igLink} target="_blank" rel="noopener" class="reveal press mt-3 block font-display text-[clamp(2.2rem,8vw,4rem)] leading-none tracking-[-0.03em] break-all [@media(hover:hover)]:hover:text-olive" style="--i:1">@{site.instagram}</a>
+      <p class="reveal mt-4 max-w-md text-forest/75" style="--i:2">Ahí mostramos avances de obra, jardines que crecen y detalles de materiales.</p>
+      <a href={igLink} target="_blank" rel="noopener" class:list={['reveal mt-6', buttonVariants({ variant: 'primary' })]} style="--i:3">
+        <InstagramLogoIcon size={20} aria-hidden="true" /> Seguinos en Instagram
+      </a>
+    </div>
+    <div class="grid grid-cols-4 gap-2 sm:gap-3 lg:col-span-7">
+      {thumbs.map((t, i) => (
+        <a href={igLink} target="_blank" rel="noopener" class="reveal press block aspect-square overflow-hidden rounded-xs" style={`--i:${i}`} aria-label={`${t.alt}, ver en Instagram`}>
+          <Image src={t.img} alt="" widths={[200, 400]} sizes="(min-width: 1024px) 14vw, 25vw" class="h-full w-full object-cover" />
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

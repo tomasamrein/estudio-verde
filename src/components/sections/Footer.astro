@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import { InstagramLogoIcon, WhatsappLogoIcon, EnvelopeSimpleIcon } from '@phosphor-icons/react/dist/ssr';
+import { images } from '../../lib/images';
+import { site, waLink, mailLink, igLink } from '../../lib/site';
+const year = new Date().getFullYear();
+---
+<footer class="bg-forest pt-16 pb-10 text-paper">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+    <div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+      <div>
+        <div class="flex items-center gap-3">
+          <Image src={images.logoBlanco} alt="" width={56} height={56} class="h-12 w-12" />
+          <span class="font-display text-5xl tracking-[-0.04em] sm:text-6xl">Estudio Verde</span>
+        </div>
+        <p class="mt-3 text-paper/70">Arquitectura y paisajismo. {site.zone}.</p>
+      </div>
+      <ul class="flex flex-col gap-3 text-paper/90">
+        <li><a href={waLink} target="_blank" rel="noopener" class="press inline-flex items-center gap-2 [@media(hover:hover)]:hover:text-sage"><WhatsappLogoIcon size={20} aria-hidden="true" /> {site.whatsappLabel}</a></li>
+        <li><a href={mailLink} class="press inline-flex items-center gap-2 [@media(hover:hover)]:hover:text-sage"><EnvelopeSimpleIcon size={20} aria-hidden="true" /> {site.email}</a></li>
+        <li><a href={igLink} target="_blank" rel="noopener" class="press inline-flex items-center gap-2 [@media(hover:hover)]:hover:text-sage"><InstagramLogoIcon size={20} aria-hidden="true" /> @{site.instagram}</a></li>
+      </ul>
+    </div>
+    <p class="mt-14 border-t border-paper/15 pt-6 text-xs text-paper/55">© {year} Estudio Verde. Rosario, Santa Fe.</p>
+  </div>
+</footer>

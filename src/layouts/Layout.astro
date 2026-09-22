@@ -1,0 +1,69 @@
+---
+import '../styles/global.css';
+import { site, igLink } from '../lib/site';
+
+const title = 'Estudio Verde | Arquitectura y paisajismo en Rosario';
+const description = site.description;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = new URL('/og.png', Astro.site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  description,
+  url: site.url,
+  image: og,
+  email: site.email,
+  telephone: `+${site.whatsapp}`,
+  areaServed: { '@type': 'City', name: 'Rosario' },
+  address: { '@type': 'PostalAddress', addressLocality: 'Rosario', addressRegion: 'Santa Fe', addressCountry: 'AR' },
+  sameAs: [igLink],
+  founder: [
+    { '@type': 'Person', name: 'Paula Sánchez', jobTitle: 'Arquitecta' },
+    { '@type': 'Person', name: 'Martín Sánchez', jobTitle: 'Paisajista' },
+  ],
+  knowsAbout: ['Arquitectura', 'Paisajismo', 'Remodelaciones', 'Diseño sustentable'],
+};
+---
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="theme-color" content="#1f2a1c" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={og} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+    <script is:inline>
+      // Reveals con IntersectionObserver (sin listeners de scroll)
+      (function () {
+        var els = document.querySelectorAll('.reveal, .reveal-clip');
+        if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('is-in'); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+        els.forEach(function (e) { io.observe(e); });
+      })();
+    </script>
+  </body>
+</html>

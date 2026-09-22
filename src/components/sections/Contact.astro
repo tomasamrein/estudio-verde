@@ -1,0 +1,38 @@
+---
+import { WhatsappLogoIcon, EnvelopeSimpleIcon, MapPinIcon } from '@phosphor-icons/react/dist/ssr';
+import { site, waLink, mailLink } from '../../lib/site';
+import { buttonVariants } from '../ui/button';
+---
+<section id="contacto" class="bg-terra py-20 text-paper md:py-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+    <p class="reveal flex items-center gap-2 text-sm font-semibold tracking-[0.18em] uppercase"><MapPinIcon size={18} weight="fill" aria-hidden="true" /> {site.zone}</p>
+    <h2 class="reveal mt-6 max-w-4xl font-display text-[clamp(2.8rem,9vw,6.5rem)] leading-[0.95] tracking-[-0.04em]" style="--i:1">Contanos qué querés hacer.</h2>
+    <p class="reveal mt-6 max-w-xl text-lg leading-relaxed text-paper/90" style="--i:2">Escribinos por WhatsApp o mail. Te respondemos nosotros y, si hace falta, coordinamos una visita con cita previa.</p>
+    <div class="reveal mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10" style="--i:3">
+      <a href={waLink} target="_blank" rel="noopener" class={buttonVariants({ variant: 'light', size: 'xl' })}>
+        <WhatsappLogoIcon size={28} weight="fill" aria-hidden="true" /> Escribinos por WhatsApp
+      </a>
+      <div>
+        <a href={mailLink} class="press inline-flex items-center gap-2 text-lg underline decoration-1 underline-offset-[6px] sm:text-xl">
+          <EnvelopeSimpleIcon size={22} aria-hidden="true" /> {site.email}
+        </a>
+        <button type="button" id="copy-mail" data-mail={site.email} class="press ml-3 text-sm text-paper/80 [@media(hover:hover)]:hover:text-paper">Copiar</button>
+        <span id="copy-status" class="sr-only" aria-live="polite"></span>
+      </div>
+    </div>
+    <p class="reveal mt-12 border-t border-paper/30 pt-6 text-sm text-paper/85" style="--i:4">Atendemos solo con cita previa, de lunes a viernes. Contestamos los mensajes dentro del día hábil.</p>
+  </div>
+</section>
+<script is:inline>
+  (function () {
+    var b = document.getElementById('copy-mail');
+    var s = document.getElementById('copy-status');
+    if (!b || !navigator.clipboard) { if (b) b.hidden = true; return; }
+    b.addEventListener('click', function () {
+      navigator.clipboard.writeText(b.getAttribute('data-mail')).then(function () {
+        b.textContent = 'Copiado'; s.textContent = 'Mail copiado';
+        setTimeout(function () { b.textContent = 'Copiar'; }, 1800);
+      });
+    });
+  })();
+</script>

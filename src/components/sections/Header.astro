@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import { WhatsappLogoIcon } from '@phosphor-icons/react/dist/ssr';
+import { images } from '../../lib/images';
+import { waLink } from '../../lib/site';
+import { buttonVariants } from '../ui/button';
+
+const links = [
+  { href: '#estudio', label: 'Estudio' },
+  { href: '#servicios', label: 'Servicios' },
+  { href: '#proceso', label: 'Proceso' },
+  { href: '#proyectos', label: 'Proyectos' },
+  { href: '#contacto', label: 'Contacto' },
+];
+---
+<div id="top-sentinel" class="absolute top-0 h-24 w-px" aria-hidden="true"></div>
+<header id="site-header" class="group sticky top-0 z-40 border-b border-transparent bg-paper transition-[border-color] duration-300 data-[compact]:border-forest/15">
+  <div class="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 transition-[height] duration-300 group-data-[compact]:h-14 sm:px-6 lg:px-10">
+    <a href="#top" class="flex items-center gap-2" aria-label="Estudio Verde, inicio">
+      <Image src={images.logo} alt="" width={40} height={40} class="h-9 w-9 transition-transform duration-300 group-data-[compact]:scale-90" />
+      <span class="font-display text-2xl leading-none font-medium tracking-[-0.03em]">Estudio Verde</span>
+    </a>
+    <nav aria-label="Principal" class="hidden lg:block">
+      <ul class="flex gap-7 text-sm">
+        {links.map((l) => <li><a href={l.href} class="press [@media(hover:hover)]:hover:text-olive">{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <a href={waLink} target="_blank" rel="noopener" class={buttonVariants({ variant: 'whatsapp', size: 'sm' })}>
+      <WhatsappLogoIcon size={18} weight="fill" aria-hidden="true" /> <span>Escribinos</span>
+    </a>
+  </div>
+</header>
+<script is:inline>
+  (function () {
+    var h = document.getElementById('site-header');
+    var s = document.getElementById('top-sentinel');
+    if (!h || !s || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) h.removeAttribute('data-compact'); else h.setAttribute('data-compact', '');
+    }).observe(s);
+  })();
+</script>

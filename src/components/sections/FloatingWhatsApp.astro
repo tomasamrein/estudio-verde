@@ -1,0 +1,29 @@
+---
+import { WhatsappLogoIcon } from '@phosphor-icons/react/dist/ssr';
+import { waLink } from '../../lib/site';
+---
+<a
+  id="float-wa"
+  href={waLink}
+  target="_blank"
+  rel="noopener"
+  aria-label="Escribinos por WhatsApp"
+  class="press fixed right-4 bottom-4 z-50 flex h-14 w-14 translate-y-4 items-center justify-center rounded-full bg-terra text-paper opacity-0 pointer-events-none data-[show]:pointer-events-auto data-[show]:translate-y-0 data-[show]:opacity-100 [@media(hover:hover)]:hover:bg-terra-dark sm:right-6 sm:bottom-6"
+  style="transition: opacity 300ms cubic-bezier(0.23,1,0.32,1), transform 300ms cubic-bezier(0.23,1,0.32,1);"
+>
+  <WhatsappLogoIcon size={28} weight="fill" aria-hidden="true" />
+</a>
+<script is:inline>
+  // Se oculta sobre el hero y sobre contacto (IntersectionObserver, sin scroll listeners)
+  (function () {
+    var btn = document.getElementById('float-wa');
+    var targets = [document.querySelector('[data-hero]'), document.getElementById('contacto')].filter(Boolean);
+    if (!btn || !('IntersectionObserver' in window)) { if (btn) btn.setAttribute('data-show', ''); return; }
+    var visible = new Set();
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) visible.add(e.target); else visible.delete(e.target); });
+      if (visible.size) btn.removeAttribute('data-show'); else btn.setAttribute('data-show', '');
+    });
+    targets.forEach(function (t) { io.observe(t); });
+  })();
+</script>

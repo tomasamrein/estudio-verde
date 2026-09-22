@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/newsreader';
+@import '@fontsource-variable/figtree';
+
+@theme {
+  --color-paper: #f3f1e8;
+  --color-bone: #e6e2d3;
+  --color-forest: #1f2a1c;
+  --color-olive: #4b5a12;
+  --color-sage: #9aa58a;
+  --color-wood: #8a5f3c;
+  --color-terra: #b4583a;
+  --color-terra-dark: #9a4830;
+  --font-display: 'Newsreader Variable', Georgia, serif;
+  --font-sans: 'Figtree Variable', system-ui, sans-serif;
+  --radius-xs: 2px;
+  --ease-out-soft: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body { background: var(--color-paper); color: var(--color-forest); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+::selection { background: var(--color-olive); color: var(--color-paper); }
+:focus-visible { outline: 2px solid var(--color-terra); outline-offset: 3px; }
+
+/* Reveal: el JS agrega .is-in con IntersectionObserver */
+.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out-soft), transform 600ms var(--ease-out-soft); transition-delay: calc(var(--i, 0) * 80ms); }
+.js .reveal.is-in { opacity: 1; transform: none; }
+.js .reveal-clip { clip-path: inset(0 0 100% 0); transition: clip-path 1100ms var(--ease-out-soft); }
+.js .reveal-clip.is-in { clip-path: inset(0 0 0 0); }
+
+.press { transition: transform 160ms var(--ease-out-soft), background-color 160ms, color 160ms, opacity 200ms; }
+.press:active { transform: scale(0.97); }
+
+/* Proceso: paso activo */
+.step { opacity: 0.45; transition: opacity 300ms var(--ease-out-soft); }
+.step.is-active { opacity: 1; }
+.step .bar { transform: scaleX(0); transform-origin: left; transition: transform 500ms var(--ease-out-soft); }
+.step.is-active .bar { transform: scaleX(1); }
+.verb { opacity: 0; transform: translateY(12px); transition: opacity 400ms var(--ease-out-soft), transform 400ms var(--ease-out-soft); }
+.verb.is-active { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal, .js .reveal-clip { opacity: 1; transform: none; clip-path: none; transition: none; }
+  *, *::before, *::after { animation: none !important; transition-duration: 0ms !important; }
+}

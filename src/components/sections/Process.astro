@@ -1,0 +1,56 @@
+---
+const steps = [
+  { verb: 'Charlamos', title: 'Charla inicial', text: 'Nos contás qué necesitás, vemos el lugar y coordinamos una visita con cita previa. Sin compromiso.' },
+  { verb: 'Diseñamos', title: 'Diseño', text: 'Armamos la propuesta de arquitectura y paisaje juntas, con materiales, especies y plazos claros.' },
+  { verb: 'Construimos', title: 'Obra', text: 'Dirigimos la obra y el armado del jardín. Te mantenemos al tanto en cada etapa.' },
+  { verb: 'Entregamos', title: 'Entrega', text: 'Recorremos todo con vos y te dejamos indicaciones de cuidado para que el espacio crezca bien.' },
+];
+---
+<section id="proceso" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-32 lg:px-10">
+  <p class="reveal text-xs font-semibold tracking-[0.2em] text-wood uppercase">Cómo trabajamos</p>
+  <div class="mt-6 grid gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-6">
+      <div class="lg:sticky lg:top-32">
+        <div class="relative h-[clamp(4rem,12vw,8.5rem)]" aria-hidden="true">
+          {steps.map((s, i) => (
+            <span data-verb={i} class:list={['verb absolute inset-0 font-display text-[clamp(3.2rem,11vw,8rem)] leading-none italic tracking-[-0.04em] text-olive', { 'is-active': i === 0 }]}>{s.verb}</span>
+          ))}
+        </div>
+        <p class="mt-4 max-w-sm text-forest/70">Cuatro pasos simples. Tocá cada uno para ver qué pasa en esa etapa.</p>
+      </div>
+    </div>
+    <ol class="lg:col-span-6" id="process-steps">
+      {steps.map((s, i) => (
+        <li class:list={['step border-t border-forest/15 lg:min-h-[38vh]', { 'is-active': i === 0 }]} data-step={i}>
+          <button type="button" class="press flex w-full items-baseline gap-5 py-6 text-left" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`step-${i}`}>
+            <span class="font-display text-lg text-wood">0{i + 1}</span>
+            <span class="font-display text-3xl tracking-[-0.02em] sm:text-4xl">{s.title}</span>
+          </button>
+          <div id={`step-${i}`} class="pb-8 pl-10">
+            <span class="bar mb-4 block h-0.5 w-16 bg-terra"></span>
+            <p class="max-w-md text-lg leading-relaxed text-forest/80">{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+<script is:inline>
+  (function () {
+    var items = document.querySelectorAll('#process-steps [data-step]');
+    var verbs = document.querySelectorAll('[data-verb]');
+    function set(n) {
+      items.forEach(function (el, i) {
+        el.classList.toggle('is-active', i === n);
+        el.querySelector('button').setAttribute('aria-expanded', i === n ? 'true' : 'false');
+      });
+      verbs.forEach(function (v, i) { v.classList.toggle('is-active', i === n); });
+    }
+    items.forEach(function (el, i) { el.querySelector('button').addEventListener('click', function () { set(i); }); });
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) set(Number(e.target.getAttribute('data-step'))); });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  })();
+</script>
