@@ -2,7 +2,7 @@
 import { WhatsappLogoIcon, EnvelopeSimpleIcon, MapPinIcon } from '@phosphor-icons/react/dist/ssr';
 import CircularCTA from '../react/CircularCTA';
 import { site, waLink, mailLink } from '../../lib/site';
-import { buttonVariants } from '../ui/button';
+import SpecularButton from '../react/SpecularButton';
 ---
 <section id="contacto" class="bg-terra py-20 text-paper md:py-32">
   <div class="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-12 lg:px-10">
@@ -11,14 +11,14 @@ import { buttonVariants } from '../ui/button';
       <h2 class="reveal mt-6 font-display text-[clamp(2.8rem,9vw,6.5rem)] leading-[0.95] tracking-[-0.04em]" style="--i:1">Contanos qué querés hacer.</h2>
       <p class="reveal mt-6 max-w-xl text-lg leading-relaxed text-paper/90" style="--i:2">Escribinos por WhatsApp o mail. Te respondemos nosotros y, si hace falta, coordinamos una visita con cita previa.</p>
       <div class="reveal mt-10 flex flex-col items-start gap-6" style="--i:3">
-        <a href={waLink} target="_blank" rel="noopener" class={buttonVariants({ variant: 'light', size: 'xl' })}>
-          <WhatsappLogoIcon size={28} weight="fill" className="shrink-0" aria-hidden="true" /> Escribinos por WhatsApp
-        </a>
-        <div>
-          <a href={mailLink} class="press inline-flex items-center gap-2 text-lg underline decoration-1 underline-offset-[6px] sm:text-xl">
-            <EnvelopeSimpleIcon size={22} className="shrink-0" aria-hidden="true" /> {site.email}
-          </a>
-          <button type="button" id="copy-mail" data-mail={site.email} class="press ml-3 text-sm text-paper/80 [@media(hover:hover)]:hover:text-paper">Copiar</button>
+        <SpecularButton client:visible href={waLink} target="_blank" rel="noopener" variant="secondary" size="lg">
+          <WhatsappLogoIcon size={26} weight="fill" className="shrink-0" aria-hidden="true" /> Escribinos por WhatsApp
+        </SpecularButton>
+        <div class="flex flex-wrap items-center gap-3">
+          <SpecularButton client:visible href={mailLink} variant="ghostDark" size="md">
+            <EnvelopeSimpleIcon size={20} className="shrink-0" aria-hidden="true" /> {site.email}
+          </SpecularButton>
+          <SpecularButton client:visible id="copy-mail" data-mail={site.email} variant="ghostDark" size="sm">Copiar mail</SpecularButton>
           <span id="copy-status" class="sr-only" aria-live="polite"></span>
         </div>
       </div>
@@ -48,8 +48,9 @@ import { buttonVariants } from '../ui/button';
     if (!b || !navigator.clipboard) { if (b) b.hidden = true; return; }
     b.addEventListener('click', function () {
       navigator.clipboard.writeText(b.getAttribute('data-mail')).then(function () {
-        b.textContent = 'Copiado'; s.textContent = 'Mail copiado';
-        setTimeout(function () { b.textContent = 'Copiar'; }, 1800);
+        var l = b.querySelector('.specular-button__label') || b;
+        l.textContent = 'Copiado'; s.textContent = 'Mail copiado';
+        setTimeout(function () { l.textContent = 'Copiar mail'; }, 1800);
       });
     });
   })();

@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import { WhatsappLogoIcon } from '@phosphor-icons/react/dist/ssr';
 import { images } from '../../lib/images';
 import { waLink } from '../../lib/site';
-import { buttonVariants } from '../ui/button';
+import SpecularButton from '../react/SpecularButton';
 
 const links = [
   { href: '#estudio', label: 'Estudio' },
@@ -25,9 +25,9 @@ const links = [
         {links.map((l) => <li><a href={l.href} class="press opacity-90 [@media(hover:hover)]:hover:opacity-100 [@media(hover:hover)]:hover:underline underline-offset-4">{l.label}</a></li>)}
       </ul>
     </nav>
-    <a href={waLink} target="_blank" rel="noopener" class={buttonVariants({ variant: 'whatsapp', size: 'sm' })}>
+    <SpecularButton client:visible href={waLink} target="_blank" rel="noopener" variant="primary" size="sm">
       <WhatsappLogoIcon size={18} weight="fill" className="shrink-0" aria-hidden="true" /> <span>Escribinos</span>
-    </a>
+    </SpecularButton>
   </div>
 </header>
 <script is:inline>

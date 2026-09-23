@@ -5,6 +5,7 @@
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react';
 import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import SpecularButton from './SpecularButton';
 
 export type GalleryItem = { title: string; kind: string; src: string; srcset: string; alt: string; width: number; height: number };
 
@@ -91,9 +92,9 @@ function Swipe({ items }: { items: GalleryItem[] }) {
           { d: -1, l: 'Proyecto anterior', I: CaretLeftIcon },
           { d: 1, l: 'Proyecto siguiente', I: CaretRightIcon },
         ].map(({ d, l, I }) => (
-          <button key={d} type="button" aria-label={l} onClick={() => nudge(d)} className="press flex h-12 w-12 items-center justify-center rounded-full border border-forest/40 [@media(hover:hover)]:hover:bg-forest [@media(hover:hover)]:hover:text-paper">
+          <SpecularButton key={d} aria-label={l} onClick={() => nudge(d)} variant="ghostLight" size="md" circle>
             <I size={18} className="shrink-0" aria-hidden="true" />
-          </button>
+          </SpecularButton>
         ))}
       </div>
     </div>

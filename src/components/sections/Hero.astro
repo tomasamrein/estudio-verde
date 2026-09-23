@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react/dist/ssr';
 import CircularCTA from '../react/CircularCTA';
+import SpecularButton from '../react/SpecularButton';
 import { images } from '../../lib/images';
 import { waLink } from '../../lib/site';
 
@@ -38,9 +39,9 @@ const mono = 'font-mono text-[11px] font-medium tracking-[0.22em] uppercase';
           </div>
         ))}
         <div class="mt-7 flex items-center gap-6">
-          <a href="#contacto" class="press inline-flex h-13 shrink-0 items-center gap-3 bg-terra px-6 text-base font-medium text-paper [@media(hover:hover)]:hover:bg-terra-dark">
+          <SpecularButton client:load href="#contacto" variant="primary" size="md" autoAnimate speed={0.35}>
             Contanos tu proyecto <span aria-hidden="true" class="text-lg leading-none">↗</span>
-          </a>
+          </SpecularButton>
           <div class="hidden sm:block">
             <CircularCTA client:idle href={waLink} label="Escribinos por WhatsApp" size={112} tone="terra" />
           </div>
@@ -53,12 +54,12 @@ const mono = 'font-mono text-[11px] font-medium tracking-[0.22em] uppercase';
 
   <div class="absolute right-4 bottom-16 flex items-center gap-3 sm:bottom-5 sm:right-6 lg:right-10">
     <span class:list={[mono, 'text-paper/80']} aria-live="polite"><span data-count>1</span> / {slides.length}</span>
-    <button type="button" data-prev aria-label="Imagen anterior" class="press flex h-11 w-11 items-center justify-center rounded-full border border-paper/50 [@media(hover:hover)]:hover:bg-paper [@media(hover:hover)]:hover:text-forest">
+    <SpecularButton client:visible data-prev="" aria-label="Imagen anterior" variant="ghostDark" circle>
       <CaretLeftIcon size={18} className="shrink-0" aria-hidden="true" />
-    </button>
-    <button type="button" data-next aria-label="Imagen siguiente" class="press flex h-11 w-11 items-center justify-center rounded-full border border-paper/50 [@media(hover:hover)]:hover:bg-paper [@media(hover:hover)]:hover:text-forest">
+    </SpecularButton>
+    <SpecularButton client:visible data-next="" aria-label="Imagen siguiente" variant="ghostDark" circle>
       <CaretRightIcon size={18} className="shrink-0" aria-hidden="true" />
-    </button>
+    </SpecularButton>
   </div>
 </section>
 <script is:inline>

@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import { InstagramLogoIcon } from '@phosphor-icons/react/dist/ssr';
 import { images } from '../../lib/images';
 import { site, igLink } from '../../lib/site';
-import { buttonVariants } from '../ui/button';
+import SpecularButton from '../react/SpecularButton';
 const thumbs = [
   { img: images.galeria, alt: 'Galería con plantas' },
   { img: images.living, alt: 'Living con plantas' },
@@ -17,9 +17,9 @@ const thumbs = [
       <p class="reveal font-mono text-[11px] font-medium tracking-[0.22em] text-wood uppercase">Obras en proceso</p>
       <a href={igLink} target="_blank" rel="noopener" class="reveal press mt-3 block font-display text-[clamp(2.2rem,8vw,4rem)] leading-none tracking-[-0.03em] break-all [@media(hover:hover)]:hover:text-olive" style="--i:1">@{site.instagram}</a>
       <p class="reveal mt-4 max-w-md text-forest/75" style="--i:2">Ahí mostramos avances de obra, jardines que crecen y detalles de materiales.</p>
-      <a href={igLink} target="_blank" rel="noopener" class:list={['reveal mt-6', buttonVariants({ variant: 'primary' })]} style="--i:3">
+      <div class="reveal mt-6" style="--i:3"><SpecularButton client:visible href={igLink} target="_blank" rel="noopener" variant="secondary" size="md">
         <InstagramLogoIcon size={20} className="shrink-0" aria-hidden="true" /> Seguinos en Instagram
-      </a>
+      </SpecularButton></div>
     </div>
     <div class="grid grid-cols-4 gap-2 sm:gap-3 lg:col-span-7">
       {thumbs.map((t, i) => (
